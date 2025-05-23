@@ -48,12 +48,10 @@ const userRoutes: RouteObject[] = [
   {
     path: ITEM_ROUTE,
     Component: ItemPage,
-    index: true,
   },
   {
     path: DASHBOARD_ROUTE,
     Component: DashboardPage,
-    index: false,
   },
   // {
   //   path: ROOT_ROUTE,
