@@ -1,0 +1,17 @@
+.layout {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  &__header {
+    width: 100%;
+    height: 60px;
+    background-color: red;
+  }
+  &__content {
+    background-color: darkgray;
+  }
+}
