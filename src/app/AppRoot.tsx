@@ -1,4 +1,4 @@
-import { ROOT_ROUTE } from "core/consts";
+import { ROOT_ROUTE } from "core/config/consts";
 import { Route, Routes } from "react-router-dom";
 import App from "./App";
 

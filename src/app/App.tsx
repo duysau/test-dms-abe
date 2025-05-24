@@ -3,10 +3,10 @@ import { Layout } from "../layout/Layout";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes } from "react-router-dom";
-
+import { useTranslation } from "react-i18next";
 
 export default function App() {
-  console.log("App", routes);
+  const [translate] = useTranslation();
   return (
     <React.Fragment>
       <ErrorBoundary FallbackComponent={() => <div>Error</div>}>
@@ -14,9 +14,10 @@ export default function App() {
         <Layout>
           <React.Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              {routes?.length > 0 && routes.map(({ path, Component }) =>
-                <Route path={path} Component={Component} key={path} />
-              )}
+              {routes?.length > 0 &&
+                routes.map(({ path, Component }) => (
+                  <Route path={path} Component={Component} key={path} />
+                ))}
             </Routes>
           </React.Suspense>
         </Layout>
@@ -24,4 +25,4 @@ export default function App() {
       </ErrorBoundary>
     </React.Fragment>
   );
-};
+}

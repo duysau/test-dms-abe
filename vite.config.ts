@@ -21,6 +21,9 @@ export default defineConfig((context) => {
         pages: resolve(__dirname, "src", "pages"),
         config: resolve(__dirname, "src", "config"),
         core: resolve(__dirname, "src", "core"),
+        assets: resolve(__dirname, "src", "assets"),
+        locales: resolve(__dirname, "src", "locales"),
+        services: resolve(__dirname, "src", "services"),
       },
     },
   };
