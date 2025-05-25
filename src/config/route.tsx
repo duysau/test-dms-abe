@@ -1,6 +1,10 @@
 import { ComponentType, lazy } from "react";
 import { RouteObject } from "react-router-dom";
-import { DASHBOARD_ROUTE, ITEM_ROUTE } from "./route-const";
+import {
+  DASHBOARD_ROUTE,
+  ITEM_ROUTE,
+  SHOPPING_CART_ROUTE,
+} from "./route-const";
 
 type LazyImport<T = any> = {
   default?: ComponentType<T>;
@@ -25,7 +29,7 @@ async function retryImport(
 }
 
 export const modules: Record<string, () => Promise<LazyImport>> = {
-  ItemPage: () => import("pages/ItemPage"),
+  CartPage: () => import("pages/CartPage"),
   DashboardPage: () => import("pages/DashboardPage"),
   // "login": () => import("../pages/login"),
 };
@@ -37,13 +41,13 @@ export const lazyLoad = (key: keyof typeof modules) =>
     }))
   );
 
-const ItemPage = lazyLoad("ItemPage");
+const CartPage = lazyLoad("CartPage");
 const DashboardPage = lazyLoad("DashboardPage");
 
 const userRoutes: RouteObject[] = [
   {
-    path: ITEM_ROUTE,
-    Component: ItemPage,
+    path: SHOPPING_CART_ROUTE,
+    Component: CartPage,
   },
   {
     path: DASHBOARD_ROUTE,

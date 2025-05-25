@@ -19,7 +19,6 @@ class I18nTranslation {
     initOptions?: InitOptions,
     callback?: Callback
   ): Promise<void> {
-    debugger;
     await i18n
       .use(detector)
       .use(initReactI18next)

@@ -1,14 +1,11 @@
 // components/Header.tsx
 
-import {
-  Menu,
-  Notification,
-  Search,
-  ShoppingCart,
-  User,
-} from "@carbon/icons-react";
+import { Menu, Notification, Search, User } from "@carbon/icons-react";
 import { Image, Input } from "antd";
 import DmsLogo from "assets/dmslogo.png";
+import { ROOT_ROUTE } from "core/config/consts";
+import NavBar from "layout/Nav";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -19,14 +16,16 @@ export default function Header() {
           <button className="md:hidden">
             <Menu className="h-6 w-6 text-black" />
           </button>
-          <Image
-            src={DmsLogo}
-            alt="DMS Logo"
-            preview={false}
-            width={40}
-            height={40}
-            className="md:block h-8 mr-4"
-          />
+          <Link to={ROOT_ROUTE}>
+            <Image
+              src={DmsLogo}
+              alt="DMS Logo"
+              preview={false}
+              width={40}
+              height={40}
+              className="md:block h-8 mr-4"
+            />
+          </Link>
           <span className="hidden md:inline text-orange-400 font-bold text-lg">
             Web dành cho đại lý
           </span>
@@ -54,6 +53,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <NavBar />
     </header>
   );
 }

@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { translate } from "core/config/i18n";
 import { OrderDetails, ShoppingCart } from "@carbon/icons-react";
+import { SHOPPING_CART_ROUTE } from "./route-const";
 
 export interface MenuItem {
   name: string;
@@ -14,7 +15,7 @@ export interface MenuItem {
 export const menu: MenuItem[] = [
   {
     name: translate("menu.shopping_cart_title"),
-    link: "/shopping-cart",
+    link: SHOPPING_CART_ROUTE,
     show: true,
     active: false,
     icon: <ShoppingCart />,
@@ -25,17 +26,5 @@ export const menu: MenuItem[] = [
     show: true,
     active: false,
     icon: <OrderDetails />,
-  },
-  {
-    name: translate("menu.item_title"),
-    link: "/item",
-    show: true,
-    active: false,
-  },
-  {
-    name: translate("menu.dashboard_title"),
-    link: "/dashboard",
-    show: true,
-    active: false,
   },
 ];

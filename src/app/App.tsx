@@ -1,12 +1,10 @@
 import routes from "config/route";
-import { Layout } from "../layout/Layout";
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Route, Routes } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { Layout } from "../layout/Layout";
 
 export default function App() {
-  const [translate] = useTranslation();
   return (
     <React.Fragment>
       <ErrorBoundary FallbackComponent={() => <div>Error</div>}>

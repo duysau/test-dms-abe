@@ -5,7 +5,6 @@ import react from "@vitejs/plugin-react";
 export default defineConfig((context) => {
   const env = loadEnv(context.mode, process.cwd(), "");
   return {
-    plugins: [react()],
     server: {
       port: 3000,
     },
@@ -19,6 +18,7 @@ export default defineConfig((context) => {
         components: resolve(__dirname, "src", "components"),
         hooks: resolve(__dirname, "src", "hooks"),
         pages: resolve(__dirname, "src", "pages"),
+        layout: resolve(__dirname, "src", "layout"),
         config: resolve(__dirname, "src", "config"),
         core: resolve(__dirname, "src", "core"),
         assets: resolve(__dirname, "src", "assets"),
@@ -26,5 +26,14 @@ export default defineConfig((context) => {
         services: resolve(__dirname, "src", "services"),
       },
     },
+    plugins: [
+      react({
+        babel: {
+          parserOpts: {
+            plugins: ["decorators-legacy"],
+          },
+        },
+      }),
+    ],
   };
 });
