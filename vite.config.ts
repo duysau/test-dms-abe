@@ -42,6 +42,8 @@ export default defineConfig((context) => {
         assets: resolve(__dirname, "src", "assets"),
         locales: resolve(__dirname, "src", "locales"),
         services: resolve(__dirname, "src", "services"),
+        models: resolve(__dirname, "src", "models"),
+        rtk: resolve(__dirname, "src", "rtk"),
       },
     },
     plugins: [
