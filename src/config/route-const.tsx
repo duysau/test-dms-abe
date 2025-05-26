@@ -1,3 +1,6 @@
-export const ITEM_ROUTE: string = "/item";
-export const DASHBOARD_ROUTE: string = "/dashboard";
-export const SHOPPING_CART_ROUTE: string = "/shopping-cart";
+import {join} from "path";
+
+export const ROOT_ROUTE: string = process.env.PUBLIC_URL || "/";
+
+
+export const SHOPPING_CART_ROUTE: string = join(ROOT_ROUTE, "/shopping-cart");

@@ -1,7 +1,7 @@
 import { Menu } from "@carbon/icons-react";
 import classNames from "classnames";
 import { menu } from "config/menu";
-import { ROOT_ROUTE } from "core/config/consts";
+// import { ROOT_ROUTE } from "core/config/consts";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const NavBar = () => {
         .filter((item) => item.show)
         .map((item) => (
           <Link
-            to={ROOT_ROUTE + item.link}
+            to={item.link}
             key={item.name}
             className={classNames(
               "flex items-center text-xs text-gray-600 hover:text-red-600 transition",

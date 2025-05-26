@@ -23,5 +23,5 @@
     "typeRoots": ["node_modules/@types/", "@types/"],
     "baseUrl": "src"
   },
-  "include": ["src"]
+  "include": ["src", "svg.d.ts"]
 }

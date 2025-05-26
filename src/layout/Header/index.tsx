@@ -3,9 +3,9 @@
 import { Menu, Notification, Search, User } from "@carbon/icons-react";
 import { Image, Input } from "antd";
 import DmsLogo from "assets/dmslogo.png";
-import { ROOT_ROUTE } from "core/config/consts";
 import NavBar from "layout/Nav";
 import { Link } from "react-router-dom";
+import { ROOT_ROUTE } from 'config/route-const.tsx'
 
 export default function Header() {
   return (
@@ -25,10 +25,10 @@ export default function Header() {
               height={40}
               className="md:block h-8 mr-4"
             />
-          </Link>
           <span className="hidden md:inline text-orange-400 font-bold text-lg">
             Web dành cho đại lý
           </span>
+          </Link>
         </div>
 
         {/* Middle: Search bar (Desktop only) */}
