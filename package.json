@@ -1,18 +1,11 @@
 {
-  "name": "vital",
+  "name": "dms-abe-2-0",
   "type": "module",
   "version": "1.0.0",
+  "private": true,
   "description": "Starter template for Vite with React (TypeScript). Supports Tailwind. Vitest and @react/testing-library configured and ready to go. Also ESLint, Prettier, Husky, Commit-lint and Atomic Design for components.",
-  "homepage": "https://github.com/jvidalv/vital#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jvidalv/vital.git"
-  },
-  "author": "Josep Vidal <josepvidalvidal@gmail.com>",
+  "author": "Khanh Duy <duynk38@fpt.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jvidalv/vital/issues"
-  },
   "keywords": [
     "react",
     "vite",
