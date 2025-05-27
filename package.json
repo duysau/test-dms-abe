@@ -93,6 +93,7 @@
     "eslint": "9.13.0",
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-react-refresh": "0.4.14",
+    "husky": "^9.1.7",
     "lint-staged": "15.2.10",
     "path-browserify": "^1.0.1",
     "postcss": "8.4.47",
