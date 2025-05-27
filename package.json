@@ -35,14 +35,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint --fix --ext .js,.jsx,.ts,.tsx src",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "lint:check": "eslint . --max-warnings 0",
     "preview": "vite preview",
-    "generate-icon": "npx @svgr/cli src/assets/icons --out-dir src/components/icons --typescript"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint-staged"
-    }
+    "generate-icon": "npx @svgr/cli src/assets/icons --out-dir src/components/icons --typescript",
+    "prepare": "husky"
   },
   "lint-staged": {
     "src/**/*.+(ts|tsx|js|jsx|json|md|html|css|less|scss)": [
@@ -91,8 +89,10 @@
     "autoprefixer": "10.4.20",
     "babel-plugin-macros": "^3.1.0",
     "eslint": "9.13.0",
+    "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "5.0.0",
     "eslint-plugin-react-refresh": "0.4.14",
+    "husky": "^9.1.7",
     "lint-staged": "15.2.10",
     "path-browserify": "^1.0.1",
     "postcss": "8.4.47",
