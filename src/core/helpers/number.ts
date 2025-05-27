@@ -150,8 +150,10 @@ export const calculateSumArray = (array: number[]) => {
 };
 
 // Rounding integers
-export const roundNumber = (value: number | null | undefined): number => {
-  return value != null ? Math.round(value) : null;
+export const roundNumber = (
+  value: number | null | undefined
+): number | null => {
+  return value !== null && value !== undefined ? Math.round(value) : null;
 };
 
 export const roundNumberDecimal = (num: number, precision = 4): number => {

@@ -82,7 +82,7 @@ class HttpInterceptor {
       async function (error: AxiosError): Promise<void> {
         if (error?.response?.status) {
           const refreshToken = Cookies.get(REFRESH_TOKEN);
-          const { status, data } = error.response;
+          const { status } = error.response;
           switch (status) {
             case 401:
               try {
@@ -105,6 +105,7 @@ class HttpInterceptor {
               } catch (refreshError) {
                 return Promise.reject(refreshError);
               }
+              break;
             case 403:
               HttpInterceptor.history.replace(FORBIDDEN_ROUTE);
               break;

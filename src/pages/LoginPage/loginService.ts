@@ -6,44 +6,45 @@ import { HttpStatusCode } from "core/services/service-types";
 import { isEqual } from "lodash";
 import { AppUser } from "models/AppUser";
 import { LoginUser } from "models/Login/Login";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { profileActions } from "rtk/slices";
 import { useAppDispatch } from "rtk/useRedux";
+import { default as Cookie } from "js-cookie";
 
 export default function useLogin() {
   const dispatch = useAppDispatch();
   const [errorMessagePass, setErrorMessagePass] = useState<string>("");
   const [errorMessageUsername, setErrorMessageUsername] = useState<string>("");
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [isLoadingButtonSubmit, setIsLoadingButtonSubmit] =
     useState<boolean>(false);
   const [loginUser, setLoginUser] = useState<LoginUser>({
     ...new LoginUser(),
-    email: "",
+    username: "",
     password: "",
   });
-  const handleLoginFailed = (error: AxiosError) => {
+  const handleLoginFailed = useCallback((error: AxiosError) => {
     if (isEqual(error?.response?.status, HttpStatusCode.BAD_REQUEST)) {
       const { message } = error?.response?.data || {};
-      const { email, password } = error?.response?.data?.errors || {};
+      const { username, password } = error?.response?.data?.errors || {};
 
-      if (email) setErrorMessageUsername(email);
+      if (username) setErrorMessageUsername(username);
       if (password) setErrorMessagePass(password);
       if (message) setErrorMessagePass(message);
     }
-  };
-
-  const handleSetValue = (
-    field: string,
-    value?: string | number | boolean | null
-  ) => {
-    setLoginUser({
-      ...loginUser,
-      [field]: value,
-      errors: undefined,
-    });
-    setErrorMessagePass("");
-    setErrorMessageUsername("");
-  };
+  }, []);
+  const handleSetValue = useCallback(
+    (field: string, value?: string | number | boolean | null) => {
+      setLoginUser((prevLoginUser) => ({
+        ...prevLoginUser,
+        [field]: value,
+        errors: undefined,
+      }));
+      setErrorMessagePass("");
+      setErrorMessageUsername("");
+    },
+    []
+  );
 
   const handleChangeField = useCallback(
     (field: string) => {
@@ -54,52 +55,61 @@ export default function useLogin() {
     [handleSetValue]
   );
 
-  const setUser = (user: AppUser) => {
-    dispatch(
-      profileActions.updateAccount({
-        id: user.id,
-        username: user.username,
-        displayName: user.displayName,
-        address: user.address,
-        email: user.email,
-        phone: user.phone,
-        sexId: user.sexId,
-        birthday: user.birthday,
-        avatar: user.avatar,
-        department: user.department,
-        organizationId: user.organizationId,
-        longitude: user.longitude,
-        latitude: user.latitude,
-        statusId: user.statusId,
-        rowId: user.rowId,
-        organization: user.organization,
-        sex: user.sex,
-        status: user.status,
-        store: user.store,
-      })
-    );
-    const redirect = getParameterByName("redirect") ?? ROOT_ROUTE;
-    window.location.href = `${redirect}`;
-  };
+  const setUser = useCallback(
+    (user: AppUser) => {
+      dispatch(
+        profileActions.updateAccount({
+          id: user.id,
+          username: user.username,
+          displayName: user.displayName,
+          address: user.address,
+          email: user.email,
+          phone: user.phone,
+          sexId: user.sexId,
+          birthday: user.birthday,
+          avatar: user.avatar,
+          department: user.department,
+          organizationId: user.organizationId,
+          longitude: user.longitude,
+          latitude: user.latitude,
+          statusId: user.statusId,
+          rowId: user.rowId,
+          organization: user.organization,
+          sex: user.sex,
+          status: user.status,
+          store: user.store,
+        })
+      );
+      Cookie.set("Token", user.token);
+      const redirect = getParameterByName("redirect") ?? ROOT_ROUTE;
+      window.location.href = `${redirect}`;
+    },
+    [dispatch]
+  );
 
-  const handleLogin = (
-    event:
-      | React.KeyboardEvent<HTMLInputElement>
-      | React.MouseEvent<HTMLInputElement>
-  ) => {
-    event.preventDefault();
-    setIsLoadingButtonSubmit(true);
-    authenticationService.login(loginUser).subscribe({
-      next: (response) => {
-        setUser(response);
-        setIsLoadingButtonSubmit(false);
-      },
-      error: (error: AxiosError) => {
-        handleLoginFailed(error);
-        setIsLoadingButtonSubmit(false);
-      },
-    });
-  };
+  const handleLogin = useCallback(
+    (
+      event:
+        | React.KeyboardEvent<HTMLInputElement>
+        | React.MouseEvent<HTMLInputElement>
+    ) => {
+      event.preventDefault();
+      setIsLoadingButtonSubmit(true);
+      authenticationService.login(loginUser).subscribe({
+        next: (response) => {
+          setUser(response);
+          setLoading(false);
+          setIsLoadingButtonSubmit(false);
+        },
+        error: (error: AxiosError) => {
+          handleLoginFailed(error);
+          setIsLoadingButtonSubmit(false);
+          setLoading(true);
+        },
+      });
+    },
+    [loginUser, setUser, handleLoginFailed]
+  );
 
   const handleEnter = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement>) => {
@@ -109,8 +119,36 @@ export default function useLogin() {
     },
     [handleLogin]
   );
+
+  const getUserInformation = useCallback(() => {
+    authenticationService.checkAuth().subscribe({
+      next: (user) => {
+        setUser(user);
+      },
+      error: (error: AxiosError) => {
+        handleLoginFailed(error);
+      },
+      complete: () => {
+        setLoading(false);
+      },
+    });
+  }, [handleLoginFailed, setUser]);
+
+  useEffect(() => {
+    const token = Cookie.get("Token");
+    if (token) {
+      getUserInformation();
+    } else {
+      setLoading(false);
+    }
+  }, [getUserInformation]);
+
   return {
+    errorMessagePass,
+    errorMessageUsername,
+    isLoadingButtonSubmit,
     loginUser,
+    isLoading,
     handleLogin,
     handleChangeField,
     handleEnter,

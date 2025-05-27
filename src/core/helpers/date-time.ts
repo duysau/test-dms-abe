@@ -43,7 +43,9 @@ export function formatTime(
   time: Dayjs,
   timeFormat: string = STANDARD_TIME_FORMAT
 ) {
-  if (!time) return null;
+  if (!time) {
+    return null;
+  }
   if (typeof time === "object" && "format" in time) {
     return time.format(timeFormat);
   }
@@ -169,7 +171,7 @@ export function timeAgo(time: string) {
   // eslint-disable-next-line no-cond-assign
   while ((format = time_formats[i++]))
     if (seconds < (format[0] as number)) {
-      if (typeof format[2] == "string") return format[list_choice];
+      if (typeof format[2] === "string") return format[list_choice];
       else
         return Math.floor(seconds / format[2]) + " " + format[1] + " " + token;
     }

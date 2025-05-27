@@ -9,7 +9,9 @@ export const toFixedNumber = (
   value: number,
   fractionDigits = numberConstants.TWO
 ) => {
-  if (isNil(value)) return undefined;
+  if (isNil(value)) {
+    return undefined;
+  }
 
   return Number(value.toFixed(fractionDigits));
 };

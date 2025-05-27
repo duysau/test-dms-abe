@@ -9,7 +9,15 @@ import useLogin from "./loginService";
 export default function Login() {
   const [translate] = useTranslation();
 
-  const { loginUser, handleLogin, handleChangeField, handleEnter } = useLogin();
+  const {
+    loginUser,
+    errorMessagePass,
+    errorMessageUsername,
+    isLoadingButtonSubmit,
+    handleLogin,
+    handleChangeField,
+    handleEnter,
+  } = useLogin();
 
   return (
     <div className='relative min-h-screen overflow-y-hidden bg-[#b73853]'>
@@ -39,10 +47,16 @@ export default function Login() {
               <Form>
                 {/* Username Field */}
                 <div className='mb-4 sm:mb-6'>
-                  <FormItem>
+                  <FormItem
+                    validateStatus={errorMessageUsername ? "error" : ""}
+                    help={errorMessageUsername}
+                  >
                     <Input
                       type='text'
-                      placeholder='Nhập tên đăng nhập'
+                      placeholder={
+                        translate("login.placeholder.username") ||
+                        "Nhập tên đăng nhập"
+                      }
                       value={loginUser.username}
                       onChange={(event) =>
                         handleChangeField("username")(event.target.value)
@@ -61,9 +75,12 @@ export default function Login() {
 
                 {/* Password Field */}
                 <div className='mb-4 sm:mb-6'>
-                  <FormItem>
+                  <FormItem
+                    validateStatus={errorMessagePass ? "error" : ""}
+                    help={errorMessagePass}
+                  >
                     <Input.Password
-                      placeholder='Nhập mật khẩu'
+                      placeholder={translate("login.placeholder.password")}
                       value={loginUser.password}
                       className='h-10 font-bold'
                       onPressEnter={handleEnter}
@@ -84,6 +101,7 @@ export default function Login() {
                 <div className='mt-6 sm:mt-10'>
                   <Button
                     size='large'
+                    loading={isLoadingButtonSubmit}
                     onClick={(e) => handleLogin(e)}
                     className='w-full rounded bg-[#344955] px-8 py-3 font-semibold text-white transition-all duration-300 hover:bg-red-600 disabled:opacity-50 sm:py-4'
                   >

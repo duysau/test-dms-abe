@@ -6,10 +6,17 @@ import { Repository } from "react-3layer-common";
 import { Observable } from "rxjs";
 import nameof from "ts-nameof.macro";
 import { join } from "path";
+import { AppUser } from "models/AppUser";
 class AuthenticationService extends Repository {
   constructor() {
     super(httpConfig);
     this.baseURL = join(API_BASE_URL, API_ACCOUNT_LOGIN);
+  }
+
+  public checkAuth(): Observable<AppUser> {
+    return this.http
+      .post<AppUser>(kebabCase(nameof(this.checkAuth)))
+      .pipe(Repository.responseMapToModel<AppUser>(AppUser));
   }
 
   public login = (user: LoginUser): Observable<LoginUser> => {
